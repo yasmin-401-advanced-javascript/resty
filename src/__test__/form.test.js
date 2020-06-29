@@ -1,16 +1,22 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import Counter from '../component/form/main.js';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import renderer from 'react-test-renderer';
+
+it('is alive at application start', () => {
+  const form = shallow(<Counter />);
+  expect(form.find('main form .url input').exists()).toBeTruthy();
+});
 it('renders main', () => {
     const { getByText } = render(<Counter />);
     const linkElement = getByText('URL :');
     expect(linkElement).toBeInTheDocument();
   });
-//   it('submit main', () => {
-//         const onSubmitFn = jest.fn();
-//         const wrapper = mount(<Counter onSubmit={this.handleSubmit}/>);
-//         const form = wrapper.find('form');
-//         form.simulate('submit');
-//         expect(onSubmitFn).toHaveBeenCalledTimes(1);
-//       });
+  it('submit main', () => {
+        const onSubmitFn = jest.fn();
+        const wrapper = mount(<Counter onSubmit={this.handleSubmit}/>);
+        const form = wrapper.find('form');
+        form.simulate('submit');
+        expect(onSubmitFn).toHaveBeenCalledTimes(1);
+      });
